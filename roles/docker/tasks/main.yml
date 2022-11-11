@@ -30,3 +30,6 @@
     groups: docker
     append: yes
   become: yes
+
+- name: reset ssh connection
+  meta: reset_connection
