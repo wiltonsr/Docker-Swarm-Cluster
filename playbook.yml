@@ -1,13 +1,18 @@
 ---
- - name: Configurando Managers
-   hosts: docker_swarm_manager
+- name: Install Docker
+  hosts: all
 
-   roles:
-     - docker
-     - manager
-
- - name: Configurando Workers
-   hosts: docker_swarm_worker
-   roles:
+  roles:
     - docker
+
+- name: Configure Managers
+  hosts: docker_swarm_manager
+
+  roles:
+    - manager
+
+- name: Configure Workers
+  hosts: docker_swarm_worker
+
+  roles:
     - worker

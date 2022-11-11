@@ -1,21 +1,21 @@
 ---
-- name: Verifica se o Docker Swarm está habilitado
+- name: Verify docker swarm is enabled
   shell: docker info
   changed_when: False
   register: docker_info
 
-- name: Cria o cluster no primeiro servidor
+- name: Init cluster on first manager
   shell: docker swarm init --advertise-addr {{ docker_swarm_manager_ip }}:{{ docker_swarm_manager_port }}
   when: "docker_info.stdout.find('Swarm: active') == -1 and inventory_hostname == groups['docker_swarm_manager'][0]"
 
-- name: Armazena o token de manager
+- name: Register manager token
   shell: docker swarm join-token -q manager
   changed_when: False
   register: docker_manager_token
   delegate_to: "{{ groups['docker_swarm_manager'][0] }}"
   when: "docker_info.stdout.find('Swarm: active') == -1"
 
-- name: Adiciona os outros swarms Managers no cluster.
+- name: Join others manager to cluster
   shell: docker swarm join --token "{{ docker_manager_token.stdout }}" {{ docker_swarm_manager_ip}}:{{ docker_swarm_manager_port }}
   changed_when: False
   when: "docker_info.stdout.find('Swarm: active') == -1
