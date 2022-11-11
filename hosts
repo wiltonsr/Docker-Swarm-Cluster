@@ -1,0 +1,16 @@
+[all:vars]
+ansible_connection=ssh
+ansible_user=vagrant
+ansible_host_key_checking=False
+docker_swarm_manager_ip=192.168.56.101
+docker_swarm_manager_port=2377
+
+[docker_swarm_manager]
+192.168.56.101 ansible_ssh_private_key_file=./.vagrant/machines/master01/virtualbox/private_key
+192.168.56.102 ansible_ssh_private_key_file=./.vagrant/machines/master02/virtualbox/private_key
+192.168.56.103 ansible_ssh_private_key_file=./.vagrant/machines/master03/virtualbox/private_key
+
+[docker_swarm_worker]
+192.168.56.201 ansible_ssh_private_key_file=./.vagrant/machines/worker01/virtualbox/private_key
+192.168.56.202 ansible_ssh_private_key_file=./.vagrant/machines/worker02/virtualbox/private_key
+192.168.56.203 ansible_ssh_private_key_file=./.vagrant/machines/worker03/virtualbox/private_key
